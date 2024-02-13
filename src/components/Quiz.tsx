@@ -7,33 +7,18 @@ interface QuizProps {
 }
 
 const Quiz: React.FC<QuizProps> = ({ questions }) => {
-  const [answerState, setAnswerState] = useState<string>("");
   const [userAnswers, setUserAnswers] = useState<(string | null)[]>([]);
-  const activeQuestionIndex: number =
-    answerState === "" ? userAnswers.length : userAnswers.length - 1;
+  const activeQuestionIndex: number = userAnswers.length;
   const quizIsCompleted = activeQuestionIndex === questions.length;
 
-  const handleAnswerClick = useCallback(
-    function handleAnswerClick(selectedAnswer: string | null) {
-      setUserAnswers((prevUserAnswers) => {
-        setAnswerState("answered");
-        return [...prevUserAnswers, selectedAnswer];
-      });
-
-      setTimeout(() => {
-        if (selectedAnswer === questions[activeQuestionIndex].answers[0]) {
-          setAnswerState("correct");
-        } else {
-          setAnswerState("wrong");
-        }
-
-        setTimeout(() => {
-          setAnswerState("");
-        }, 2000);
-      }, 1000);
-    },
-    [activeQuestionIndex, questions]
-  );
+  const handleAnswerClick = useCallback(function handleAnswerClick(
+    selectedAnswer: string | null
+  ) {
+    setUserAnswers((prevUserAnswers) => {
+      return [...prevUserAnswers, selectedAnswer];
+    });
+  },
+  []);
 
   const handleSkipQuestion = useCallback(
     () => handleAnswerClick(null),
@@ -53,13 +38,10 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
     <div id="quiz">
       <Question
         key={activeQuestionIndex}
-        answerState={answerState}
-        questionText={questions[activeQuestionIndex].text}
-        answers={questions[activeQuestionIndex].answers}
-        selectedAnswer={userAnswers[userAnswers.length - 1]}
+        questionIndex={activeQuestionIndex}
         onSelectAnswer={handleAnswerClick}
         onSkipAnswer={handleSkipQuestion}
-        />
+      />
     </div>
   );
 };
