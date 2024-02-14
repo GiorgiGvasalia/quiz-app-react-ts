@@ -23,7 +23,14 @@ const QuestionTimer: React.FC<TimerProps> = ({ timeout, onTimeout, mode }) => {
     return () => clearInterval(intervalId);
   }, []);
 
-  return <progress id="question-time" value={remainingTime} max={timeout} className={mode}/>;
+  return (
+    <progress
+      id="question-time"
+      value={remainingTime}
+      max={timeout}
+      className={mode}
+    />
+  );
 };
 
 export default QuestionTimer;

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
-import QuizCompleteImg from "../assets/quiz-complete.png";
 import Question from "./Question";
+import Summary from "./Summary";
 
 interface QuizProps {
   questions: { text: string; answers: string[] }[];
@@ -26,12 +26,7 @@ const Quiz: React.FC<QuizProps> = ({ questions }) => {
   );
 
   if (quizIsCompleted) {
-    return (
-      <div id="summary">
-        <img src={QuizCompleteImg} alt="Quiz_trophy_img" />
-        <h2>Quiz Completed!</h2>
-      </div>
-    );
+    return <Summary userAnswers={userAnswers} />;
   }
 
   return (
