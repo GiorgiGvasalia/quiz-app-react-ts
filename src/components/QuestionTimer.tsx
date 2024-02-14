@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 interface TimerProps {
   timeout: number;
   onTimeout: () => void;
+  mode: string;
 }
 
-const QuestionTimer: React.FC<TimerProps> = ({ timeout, onTimeout }) => {
+const QuestionTimer: React.FC<TimerProps> = ({ timeout, onTimeout, mode }) => {
   const [remainingTime, setRemainingTime] = useState<number>(timeout);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ const QuestionTimer: React.FC<TimerProps> = ({ timeout, onTimeout }) => {
     return () => clearInterval(intervalId);
   }, []);
 
-  return <progress id="question-time" value={remainingTime} max={timeout} />;
+  return <progress id="question-time" value={remainingTime} max={timeout} className={mode}/>;
 };
 
 export default QuestionTimer;
